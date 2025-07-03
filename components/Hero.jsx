@@ -37,7 +37,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
    return (
       <section
          ref={containerRef}
-         className="relative min-h-screen overflow-hidden bg-neutral">
+         className="relative min-h-screen overflow-hidden bg-white/5">
          {/* Background Text with Parallax */}
          <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -45,7 +45,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             variants={enableEntrance ? backgroundVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
-            <h1 className="text-[12rem] md:text-[20rem] lg:text-[24rem] font-black text-white/5 pixel-text select-none leading-none">
+            <h1 className="text-[12rem] md:text-[20rem] lg:text-[24rem] font-black text-white pixel-text select-none leading-none">
                AKUMA
             </h1>
          </motion.div>

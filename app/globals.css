@@ -6,6 +6,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.cdnfonts.com/css/artpast");
 
+@tailwind components;
+@tailwind utilities;
+
 * {
    box-sizing: border-box;
    padding: 0;
@@ -37,11 +40,156 @@ a:focus {
    outline-offset: 2px;
 }
 
-.gradient-button {
-   @apply bg-gradient-to-r from-btnGradientStart to-btnGradientEnd text-black font-semibold px-6 py-2 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-menoGreen/25;
+/* Custom component styles using @layer */
+@layer components {
+   .gradient-button {
+      @apply bg-gradient-to-r from-[#00e676] to-[#00ffb3] text-black font-semibold px-6 py-2 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-menoGreen/25;
+   }
+
+   .pixel-text {
+      font-family: "Artpast", monospace;
+      letter-spacing: 0.1em;
+   }
+
+   .card-hover {
+      @apply hover:bg-gray-800 transition-colors duration-200;
+   }
+
+   .nft-card {
+      @apply bg-gray-900 rounded-xl overflow-hidden hover:bg-gray-800 transition-colors group;
+   }
+
+   .filter-button {
+      @apply text-lg font-medium transition-colors duration-200;
+   }
+
+   .filter-button-active {
+      @apply text-[#00FF85];
+   }
+
+   .filter-button-inactive {
+      @apply text-gray-400 hover:text-white;
+   }
+
+   .time-filter-button {
+      @apply px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200;
+   }
+
+   .time-filter-active {
+      @apply bg-[#00FF85] text-black;
+   }
+
+   .time-filter-inactive {
+      @apply bg-gray-800 text-gray-300 hover:bg-gray-700;
+   }
+
+   .verify-badge {
+      @apply w-4 h-4 bg-[#00FF00] rounded-full flex items-center justify-center;
+   }
+
+   .collection-button {
+      @apply w-full py-2 bg-[#00FF00] text-black font-semibold rounded-lg hover:bg-green-400 transition-colors duration-200;
+   }
+
+   .pagination-button {
+      @apply w-8 h-8 rounded-full font-medium transition-colors duration-200;
+   }
+
+   .pagination-active {
+      @apply bg-[#00FF85] text-black;
+   }
+
+   .pagination-inactive {
+      @apply bg-gray-800 text-gray-300 hover:bg-gray-700;
+   }
+
+   .toggle-switch {
+      @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#00FF85] focus:ring-offset-2 focus:ring-offset-[#111111];
+   }
+
+   .toggle-active {
+      @apply bg-[#00FF85];
+   }
+
+   .toggle-inactive {
+      @apply bg-gray-600;
+   }
+
+   .modal-backdrop {
+      @apply fixed inset-0 bg-black/60 backdrop-blur-sm;
+   }
+
+   .modal-content {
+      @apply relative bg-gray-900 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl border border-gray-800;
+   }
+
+   .search-input {
+      @apply w-full bg-gray-800 text-white pl-10 pr-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF85] focus:border-transparent;
+   }
+
+   .wallet-button {
+      @apply w-full bg-gray-800 hover:bg-gray-700 text-white py-3 px-4 rounded-lg transition-colors duration-200;
+   }
 }
 
-.pixel-text {
-   font-family: "Artpast", monospace;
-   letter-spacing: 0.1em;
+/* Custom utilities */
+@layer utilities {
+   .text-shadow-lg {
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+   }
+
+   .backdrop-blur-subtle {
+      backdrop-filter: blur(8px);
+   }
+
+   .gradient-text {
+      @apply bg-gradient-to-r from-[#00e676] to-[#00ffb3] bg-clip-text text-transparent;
+   }
 }
+
+/*  Complete Color Reference Guide */
+/*
+=== MENO NFT MARKETPLACE COLOR PALETTE ===
+
+PRIMARY COLORS:
+- neutral: #111111 (Main background)
+- menoGreen: #00FF85 (Primary brand color)
+- verifyGreen: #00FF00 (Verification badges, collection buttons)
+
+GRADIENT COLORS:
+- btnGradientStart: #00e676 (Gradient start)
+- btnGradientEnd: #00ffb3 (Gradient end)
+
+USAGE MAPPING:
+- Background: bg-neutral (#111111)
+- Primary buttons: gradient-button class (uses #00e676 to #00ffb3)
+- Verification badges: bg-verifyGreen (#00FF00)
+- Collection buttons: bg-verifyGreen (#00FF00)
+- Active states: text-menoGreen (#00FF85)
+- Toggle switches: bg-menoGreen (#00FF85)
+- Focus states: ring-menoGreen (#00FF85)
+
+GRAY SCALE:
+- gray-900: #111827 (Card backgrounds)
+- gray-800: #1f2937 (Hover states, inputs)
+- gray-700: #374151 (Secondary hover states)
+- gray-600: #4b5563 (Inactive toggles)
+- gray-400: #9ca3af (Secondary text)
+- gray-300: #d1d5db (Inactive pagination)
+
+COMPONENT-SPECIFIC COLORS:
+- Hero text: text-white/5 (5% opacity white)
+- Price positive: text-green-400
+- Price negative: text-red-400
+- Modal backdrop: bg-black/60 (60% opacity black)
+- Search input: bg-gray-800
+- Wallet buttons: bg-gray-800 hover:bg-gray-700
+
+CSS CUSTOM PROPERTIES (Alternative approach):
+:root {
+  --neutral: #111111;
+  --meno-green: #00FF85;
+  --verify-green: #00FF00;
+  --btn-gradient-start: #00e676;
+  --btn-gradient-end: #00ffb3;
+}*/
