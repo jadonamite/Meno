@@ -45,14 +45,14 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             variants={enableEntrance ? backgroundVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
-            <h1 className="text-[9vw] md:text-[11vw] lg:text-[22vw] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter">
+            <h1 className="text-[9vw] md:text-[11vw] lg:text-[13vw] font-black text-stone-700 uppercase pixel-text leading-none select-none tracking-tighter">
                Akuma
             </h1>
          </motion.div>
 
          {/* Foreground: Main Image & Bottom Info */}
          <motion.div
-            className="relative z-10 flex flex-col items-center justify-center w-full gap-10"
+            className="relative z-10  w-full gap-10"
             style={enableParallax ? { y: foregroundY } : {}}
             variants={enableEntrance ? entranceVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
@@ -61,7 +61,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             <img
                src="/akuma-characters.png"
                alt="Akuma Collection Characters"
-               className="w-full max-w-[45%] object-contain mx-auto"
+               className="w-full max-w-[70%] object-contain mx-auto"
             />
 
             {/* CTA & Floor Price */}

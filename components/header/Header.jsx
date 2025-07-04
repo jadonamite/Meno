@@ -1,31 +1,31 @@
+// components/header/Header.jsx
 "use client";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import NavActions from "./NavActions";
-import MobileMenu from "./MobileMenu";
-import LoginModal from "./LoginModal";
 
-export default function Header() {
-   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+export default function Header({ onLoginClick }) {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
    return (
-      <>
-         <header className="flex items-center justify-between px-4 md:px-6 py-4 bg-neutral border-b border-gray-800 relative z-50">
-            <Logo />
+      <header className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">
+         <Logo />
 
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-               <SearchBar />
-            </div>
+         {/* Search */}
+         <div className="hidden md:flex flex-1 justify-center max-w-lg">
+            <SearchBar />
+         </div>
 
-            <div className="hidden md:flex">
-               <NavActions onLoginClick={() => setIsLoginModalOpen(true)} />
-            </div>
+         {/* Actions */}
+         <div className="flex items-center gap-4">
+            <button
+               className="hidden md:inline-block bg-menoGreen text-black font-semibold px-4 py-2 rounded-lg hover:bg-green-400 transition"
+               onClick={onLoginClick}>
+               Login
+            </button>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Menu Icon */}
             <button
                className="md:hidden"
                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -36,23 +36,7 @@ export default function Header() {
                   <Menu className="w-6 h-6" />
                )}
             </button>
-         </header>
-
-         {/* Mobile Menu */}
-         <MobileMenu
-            isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
-            onLoginClick={() => {
-               setIsLoginModalOpen(true);
-               setIsMobileMenuOpen(false);
-            }}
-         />
-
-         {/* Login Modal */}
-         <LoginModal
-            isOpen={isLoginModalOpen}
-            onClose={() => setIsLoginModalOpen(false)}
-         />
-      </>
+         </div>
+      </header>
    );
 }
