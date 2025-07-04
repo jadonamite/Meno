@@ -19,7 +19,7 @@ export default function Nav({ onLoginClick }) {
          {/* Actions */}
          <div className="flex items-center gap-4">
             <button
-               className="hidden md:inline-block bg-menoGreen text-black font-semibold px-4 py-2 rounded-lg hover:bg-green-400 transition"
+               className="hidden md:inline-block gradient-button text-black font-semibold px-9 py-3 rounded-md  transition transform hover:scale-105"
                onClick={onLoginClick}>
                Login
             </button>

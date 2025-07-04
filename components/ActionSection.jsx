@@ -36,7 +36,7 @@ export default function ActionSection() {
             </h2>
          </motion.div>
 
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {actions.map((action, index) => (
                <motion.div
                   key={action.title}
@@ -61,7 +61,7 @@ export default function ActionSection() {
                         className="w-96 h-96 object-contain"
                      />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-4xl font-bold text-white mb-3">
                      {action.title}
                   </h3>
                   <p className="text-gray-400 leading-relaxed">
