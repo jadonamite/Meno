@@ -1,19 +1,18 @@
-// components/header/Header.jsx
 "use client";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 
-export default function Header({ onLoginClick }) {
+export default function Nav({ onLoginClick }) {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
    return (
-      <header className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">
+      <nav className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">
          <Logo />
 
          {/* Search */}
-         <div className="hidden md:flex flex-1 justify-center max-w-lg">
+         <div className="hidden md:flex flex-2 justify-center max-w-lg">
             <SearchBar />
          </div>
 
@@ -37,6 +36,6 @@ export default function Header({ onLoginClick }) {
                )}
             </button>
          </div>
-      </header>
+      </nav>
    );
 }

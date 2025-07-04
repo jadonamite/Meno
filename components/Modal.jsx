@@ -51,7 +51,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
                   className="relative bg-gray-900 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl border border-gray-800">
-                  {/* Header */}
+                  {/* nav */}
                   <div className="flex items-center justify-between mb-6">
                      <h2 className="text-xl font-semibold text-white">
                         {title}
