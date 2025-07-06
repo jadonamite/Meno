@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { MdVerified } from "react-icons/md";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 
 export default function CollectionTableRow({
    collection,
@@ -23,9 +25,18 @@ export default function CollectionTableRow({
 
    const VolumeChangeIndicator = ({ change }) => {
       if (change > 0) {
-         return <span className="text-green-400">+{change}%</span>;
+         return (
+            <span className="text-green-400 flex items-center">
+               <GoTriangleUp className="w-3 h-3 mr-1" />+{change}%
+            </span>
+         );
       } else if (change < 0) {
-         return <span className="text-red-400">{change}%</span>;
+         return (
+            <span className="text-red-400 flex items-center">
+               <GoTriangleDown className="w-3 h-3 mr-1" />
+               {change}%
+            </span>
+         );
       }
       return <span className="text-gray-400">{change}%</span>;
    };
@@ -37,7 +48,7 @@ export default function CollectionTableRow({
             <div className="flex items-center space-x-3">
                <button
                   onClick={handleFavoriteClick}
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-gray-400 hover:text-yellow-400 transition-colors focus:outline-none" // Focus outline removed - edit focus styles here
                   aria-label="Add to favorites">
                   <Star
                      size={16}
@@ -70,9 +81,7 @@ export default function CollectionTableRow({
                      {collection.name}
                   </span>
                   {collection.verified && (
-                     <div className="w-4 h-4 bg-verifyGreen rounded-full flex items-center justify-center">
-                        <span className="text-black text-xs">✓</span>
-                     </div>
+                     <MdVerified className="text-verifyGreen w-4 h-4" />
                   )}
                </div>
             </div>
@@ -84,9 +93,6 @@ export default function CollectionTableRow({
                <div className="text-white font-medium">
                   {formatPrice(collection.floor, showFiat)}
                </div>
-               <div className="text-gray-400 text-sm">
-                  {collection.floor}ETH
-               </div>
             </div>
          </td>
 
@@ -96,9 +102,6 @@ export default function CollectionTableRow({
                <div className="text-white font-medium">
                   {formatPrice(collection.topOffer, showFiat)}
                </div>
-               <div className="text-gray-400 text-sm">
-                  {collection.topOffer}ETH
-               </div>
             </div>
          </td>
 
@@ -106,7 +109,9 @@ export default function CollectionTableRow({
          <td className="px-4 py-4">
             <div className="text-right">
                <div className="text-white font-medium">
-                  {collection.floorId}ETH
+                  {showFiat
+                     ? `${(collection.floorId * 1800).toLocaleString()}`
+                     : `${collection.floorId}ETH`}
                </div>
             </div>
          </td>
@@ -114,12 +119,7 @@ export default function CollectionTableRow({
          {/* Volume */}
          <td className="px-4 py-4">
             <div className="text-right">
-               <div className="text-white font-medium">
-                  {collection.volume}%
-               </div>
-               <div className="text-sm mt-1">
-                  <VolumeChangeIndicator change={collection.volumeChange} />
-               </div>
+               <VolumeChangeIndicator change={collection.volumeChange} />
             </div>
          </td>
       </tr>

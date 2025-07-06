@@ -153,12 +153,12 @@ export const collectionRankingData = [
    },
 ];
 
-// Filter categories
+// Filter categories - reordered as requested: Star icon (favorites), All, Top, Rare
 export const filterCategories = [
+   { id: "favorites", label: "Favorites" }, // This will be handled specially with star icon
    { id: "all", label: "All" },
    { id: "top", label: "Top" },
    { id: "rare", label: "Rare" },
-   { id: "favorites", label: "Favorites" },
 ];
 
 // Time filter options

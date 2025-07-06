@@ -1,6 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Star } from "lucide-react";
 import CollectionTableRow from "./CollectionTableRow";
 import Pagination from "./Pagination";
 import Toggle from "./Toggle";
@@ -95,21 +95,49 @@ export default function CollectionTable() {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                {/* Left side - Category filters */}
                <div className="flex space-x-6">
-                  {filterCategories.map((filter) => (
-                     <button
-                        key={filter.id}
-                        onClick={() => {
-                           setActiveFilter(filter.id);
-                           setCurrentPage(1);
-                        }}
-                        className={`filter-button ${
-                           activeFilter === filter.id
-                              ? "filter-button-active"
-                              : "filter-button-inactive"
-                        }`}>
-                        {filter.label}
-                     </button>
-                  ))}
+                  {/* Favorites filter with star icon */}
+                  <button
+                     onClick={() => {
+                        setActiveFilter("favorites");
+                        setCurrentPage(1);
+                     }}
+                     className={`filter-button flex items-center space-x-2 focus:outline-none ${
+                        activeFilter === "favorites"
+                           ? "filter-button-active"
+                           : "filter-button-inactive"
+                     }`}>
+                     {" "}
+                     {/* Focus outline removed - edit focus styles here */}
+                     <Star
+                        size={16}
+                        fill={activeFilter === "favorites" ? "#fbbf24" : "none"}
+                        className={
+                           activeFilter === "favorites" ? "text-yellow-400" : ""
+                        }
+                     />
+                     <span>Favorites</span>
+                  </button>
+
+                  {/* Other filters */}
+                  {filterCategories
+                     .filter((filter) => filter.id !== "favorites")
+                     .map((filter) => (
+                        <button
+                           key={filter.id}
+                           onClick={() => {
+                              setActiveFilter(filter.id);
+                              setCurrentPage(1);
+                           }}
+                           className={`filter-button focus:outline-none ${
+                              activeFilter === filter.id
+                                 ? "filter-button-active"
+                                 : "filter-button-inactive"
+                           }`}>
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
+                           {filter.label}
+                        </button>
+                     ))}
                </div>
 
                {/* Right side - Toggle and Time filters */}
@@ -127,11 +155,13 @@ export default function CollectionTable() {
                         <button
                            key={filter.id}
                            onClick={() => setActiveTimeFilter(filter.id)}
-                           className={`time-filter-button ${
+                           className={`time-filter-button focus:outline-none ${
                               activeTimeFilter === filter.id
                                  ? "time-filter-active"
                                  : "time-filter-inactive"
                            }`}>
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
                            {filter.label}
                         </button>
                      ))}
@@ -154,7 +184,9 @@ export default function CollectionTable() {
                      <th className="text-right px-4 py-3">
                         <button
                            onClick={() => handleSort("floor")}
-                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
                            <span>Floor</span>
                            <SortIcon field="floor" />
                         </button>
@@ -162,7 +194,9 @@ export default function CollectionTable() {
                      <th className="text-right px-4 py-3">
                         <button
                            onClick={() => handleSort("topOffer")}
-                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
                            <span>Top Offer</span>
                            <SortIcon field="topOffer" />
                         </button>
@@ -170,7 +204,9 @@ export default function CollectionTable() {
                      <th className="text-right px-4 py-3">
                         <button
                            onClick={() => handleSort("floorId")}
-                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
                            <span>Floor Id</span>
                            <SortIcon field="floorId" />
                         </button>
@@ -178,7 +214,9 @@ export default function CollectionTable() {
                      <th className="text-right px-4 py-3">
                         <button
                            onClick={() => handleSort("volume")}
-                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto focus:outline-none">
+                           {" "}
+                           {/* Focus outline removed - edit focus styles here */}
                            <span>Volume</span>
                            <SortIcon field="volume" />
                         </button>
