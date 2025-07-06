@@ -26,13 +26,13 @@ export default function CollectionTableRow({
    const VolumeChangeIndicator = ({ change }) => {
       if (change > 0) {
          return (
-            <span className="text-green-400 flex items-center">
+            <span className="text-green-400 flex items-center justify-end">
                <GoTriangleUp className="w-3 h-3 mr-1" />+{change}%
             </span>
          );
       } else if (change < 0) {
          return (
-            <span className="text-red-400 flex items-center">
+            <span className="text-red-400 flex items-center justify-end">
                <GoTriangleDown className="w-3 h-3 mr-1" />
                {change}%
             </span>
