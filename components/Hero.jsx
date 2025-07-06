@@ -7,6 +7,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
    const { scrollY } = useScroll();
 
    const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
+   const backgroundScale = useTransform(scrollY, [0, 500], [1, 0.8]);
    const foregroundY = useTransform(scrollY, [0, 500], [0, -100]);
 
    const entranceVariants = {
@@ -18,6 +19,22 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
          transition: {
             duration: 1.2,
             ease: [0.25, 0.46, 0.45, 0.94],
+         },
+      },
+   };
+
+   const imageVariants = {
+      hidden: { y: -100, opacity: 0 },
+      visible: {
+         y: 0,
+         opacity: 1,
+         transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 8,
+            mass: 1.5,
+            delay: 0.5,
+            duration: 2,
          },
       },
    };
@@ -37,48 +54,63 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
    return (
       <section
          ref={containerRef}
-         className="relative min-h-screen overflow-hidden bg-[#0e0e0e] text-white flex items-center justify-center px-4 md:px-12">
+         className="relative min-h-screen overflow-hidden bg-[#0e0e0e] text-white px-4 md:px-8 lg:px-12">
          {/* Background "AKUMA" Text */}
          <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={enableParallax ? { y: backgroundY } : {}}
+            style={
+               enableParallax ? { y: backgroundY, scale: backgroundScale } : {}
+            }
             variants={enableEntrance ? backgroundVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
-            <h1 className="text-[9vw] md:text-[11vw] lg:text-[22vw] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter">
-               Akuma
+            {/* 🎯 AKUMA TEXT SIZE CONTROLS - Adjust these values to get perfect sizing */}
+            <h1 className="text-[clamp(6rem,18vw,30rem)] md:text-[clamp(12rem,22vw,35rem)] lg:text-[clamp(18rem,25vw,40rem)] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter opacity-80">
+               AKUMA
             </h1>
          </motion.div>
 
-         {/* Foreground: Main Image & Bottom Info */}
+         {/* Character Image - Absolutely positioned */}
          <motion.div
-            className="relative z-10 flex flex-col items-center justify-center w-full gap-10"
+            className="absolute inset-0 flex items-center justify-center"
             style={enableParallax ? { y: foregroundY } : {}}
             variants={enableEntrance ? entranceVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
-            {/* Character Image */}
-            <img
+            {/* 🎯 IMAGE SIZE & MARGIN CONTROLS - Adjust these values to get perfect sizing */}
+            <motion.img
                src="/akuma-characters.png"
                alt="Akuma Collection Characters"
-               className="w-full max-w-[45%] object-contain mx-auto"
+               className="w-[calc(55%+12vw)] md:w-[calc(60%+8vw)] lg:w-[calc(65%+5vw)] max-w-[800px] min-w-[320px] object-contain mt-[2vh] md:mt-[4vh] lg:mt-[6vh]"
+               variants={imageVariants}
+               initial="hidden"
+               animate="visible"
             />
+         </motion.div>
 
-            {/* CTA & Floor Price */}
-            <div className="flex flex-col sm:flex-row justify-between items-center w-full max-w-6xl gap-6 sm:gap-0">
-               <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="gradient-button text-black font-semibold px-6 py-3 rounded-lg w-full sm:w-auto">
-                  View Collection
-               </motion.button>
+         {/* Bottom Section - Absolutely positioned */}
+         <motion.div
+            className="absolute bottom-0 left-0 right-0 flex justify-between items-end p-4 md:p-8 lg:p-12"
+            style={enableParallax ? { y: foregroundY } : {}}
+            variants={enableEntrance ? entranceVariants : {}}
+            initial={enableEntrance ? "hidden" : "visible"}
+            animate="visible">
+            {/* View Collection Button - Far Left */}
+            <motion.button
+               whileHover={{ scale: 1.05 }}
+               whileTap={{ scale: 0.95 }}
+               className="gradient-button text-black font-semibold px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-xl text-sm md:text-base lg:text-lg">
+               View Collection
+            </motion.button>
 
-               <div className="text-center sm:text-right">
-                  <p className="text-sm text-gray-400">Floor Price</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-white">
-                     10 ETH
-                  </p>
-               </div>
+            {/* Floor Price - Far Right */}
+            <div className="text-right">
+               <p className="text-xs md:text-sm text-gray-400 mb-1">
+                  Floor Price
+               </p>
+               <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
+                  10 ETH
+               </p>
             </div>
          </motion.div>
       </section>
