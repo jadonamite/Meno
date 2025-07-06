@@ -1,10 +1,11 @@
 // Mock Data would be Replaced by the actual Data by whomever will integrate this file into the project.
+// Collection ranking data structure
 export const collectionRankingData = [
    {
       id: 1,
       rank: 1,
       name: "Kurai",
-      image: "/images/kurai.png",
+      image: "/images/kurai.png", // You'll need to add actual images
       floor: 10,
       topOffer: 9.6,
       floorId: 15,
@@ -157,6 +158,7 @@ export const filterCategories = [
    { id: "all", label: "All" },
    { id: "top", label: "Top" },
    { id: "rare", label: "Rare" },
+   { id: "favorites", label: "Favorites" },
 ];
 
 // Time filter options

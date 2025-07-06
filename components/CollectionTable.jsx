@@ -3,19 +3,21 @@ import { useState, useMemo } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import CollectionTableRow from "./CollectionTableRow";
 import Pagination from "./Pagination";
+import Toggle from "./Toggle";
 import {
    collectionRankingData,
    filterCategories,
    timeFilters,
 } from "../data/CollectionRankingData";
 
-export default function CollectionTable({ showFiat = false }) {
+export default function CollectionTable() {
    const [currentPage, setCurrentPage] = useState(1);
    const [activeFilter, setActiveFilter] = useState("all");
    const [activeTimeFilter, setActiveTimeFilter] = useState("1d");
    const [sortField, setSortField] = useState("rank");
    const [sortDirection, setSortDirection] = useState("asc");
    const [favorites, setFavorites] = useState(new Set());
+   const [showFiat, setShowFiat] = useState(false);
 
    const itemsPerPage = 10;
 
@@ -24,7 +26,9 @@ export default function CollectionTable({ showFiat = false }) {
       let filtered = collectionRankingData;
 
       // Apply category filter
-      if (activeFilter !== "all") {
+      if (activeFilter === "favorites") {
+         filtered = filtered.filter((item) => favorites.has(item.id));
+      } else if (activeFilter !== "all") {
          filtered = filtered.filter((item) => item.category === activeFilter);
       }
 
@@ -46,7 +50,7 @@ export default function CollectionTable({ showFiat = false }) {
       });
 
       return sorted;
-   }, [activeFilter, sortField, sortDirection]);
+   }, [activeFilter, sortField, sortDirection, favorites]);
 
    // Pagination
    const totalPages = Math.ceil(filteredAndSortedData.length / itemsPerPage);
@@ -85,11 +89,11 @@ export default function CollectionTable({ showFiat = false }) {
    };
 
    return (
-      <div className="bg-gray-900 rounded-xl overflow-hidden">
-         {/* Header with filters */}
-         <div className="p-6 border-b border-gray-800">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-               {/* Category filters */}
+      <div className="bg-black rounded-xl overflow-hidden border border-gray-800">
+         {/* Header with filters and toggle */}
+         <div className="p-6 border-b border-gray-800 bg-gray-900/50">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+               {/* Left side - Category filters */}
                <div className="flex space-x-6">
                   {filterCategories.map((filter) => (
                      <button
@@ -108,28 +112,38 @@ export default function CollectionTable({ showFiat = false }) {
                   ))}
                </div>
 
-               {/* Time filters */}
-               <div className="flex space-x-2">
-                  {timeFilters.map((filter) => (
-                     <button
-                        key={filter.id}
-                        onClick={() => setActiveTimeFilter(filter.id)}
-                        className={`time-filter-button ${
-                           activeTimeFilter === filter.id
-                              ? "time-filter-active"
-                              : "time-filter-inactive"
-                        }`}>
-                        {filter.label}
-                     </button>
-                  ))}
+               {/* Right side - Toggle and Time filters */}
+               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  {/* Fiat/Crypto Toggle */}
+                  <Toggle
+                     label="USD"
+                     checked={showFiat}
+                     onChange={setShowFiat}
+                  />
+
+                  {/* Time filters */}
+                  <div className="flex space-x-2">
+                     {timeFilters.map((filter) => (
+                        <button
+                           key={filter.id}
+                           onClick={() => setActiveTimeFilter(filter.id)}
+                           className={`time-filter-button ${
+                              activeTimeFilter === filter.id
+                                 ? "time-filter-active"
+                                 : "time-filter-inactive"
+                           }`}>
+                           {filter.label}
+                        </button>
+                     ))}
+                  </div>
                </div>
             </div>
          </div>
 
          {/* Table */}
          <div className="overflow-x-auto">
-            <table className="w-full">
-               <thead className="bg-gray-800/50">
+            <table className="w-full bg-black">
+               <thead className="bg-gray-900/30">
                   <tr>
                      <th className="text-left px-4 py-3 text-gray-400 font-medium text-sm">
                         #
@@ -196,7 +210,7 @@ export default function CollectionTable({ showFiat = false }) {
          )}
 
          {/* Results info */}
-         <div className="px-6 py-4 border-t border-gray-800 bg-gray-800/25">
+         <div className="px-6 py-4 border-t border-gray-800 bg-gray-900/25">
             <div className="flex items-center justify-between text-sm text-gray-400">
                <span>
                   Showing {startIndex + 1}-
