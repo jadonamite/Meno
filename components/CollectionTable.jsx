@@ -89,12 +89,12 @@ export default function CollectionTable() {
    };
 
    return (
-      <div className="bg-black rounded-xl overflow-hidden border border-gray-800">
+      <div className="bg-black rounded-xl overflow-hidden border border-gray-800 text-sm md:text-base lg:text-lg">
          {/* Header with filters and toggle */}
          <div className="p-6 border-b border-gray-800 bg-gray-900/50">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                {/* Left side - Category filters */}
-               <div className="flex space-x-6">
+               <div className="flex space-x-8">
                   {/* Favorites filter with star icon */}
                   <button
                      onClick={() => {
@@ -150,7 +150,7 @@ export default function CollectionTable() {
                   />
 
                   {/* Time filters */}
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-3">
                      {timeFilters.map((filter) => (
                         <button
                            key={filter.id}

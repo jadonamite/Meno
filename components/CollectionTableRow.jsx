@@ -42,7 +42,7 @@ export default function CollectionTableRow({
    };
 
    return (
-      <tr className="border-b border-gray-800 hover:bg-black/30 transition-colors">
+      <tr className="border-b border-gray-800 hover:bg-black/30 transition-colors text-sm md:text-base lg:text-lg">
          {/* Favorite & Rank */}
          <td className="px-4 py-4">
             <div className="flex items-center space-x-3">

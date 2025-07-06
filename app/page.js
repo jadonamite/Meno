@@ -10,7 +10,6 @@ export default function Home() {
          <Nav />
          <Hero />
          <CollectionTable />
-         <CollectionTable showFiat={true} />
          <NFTGrid />
          <ActionSection />
       </div>

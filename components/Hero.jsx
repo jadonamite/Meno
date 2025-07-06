@@ -65,7 +65,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
             {/* 🎯 AKUMA TEXT SIZE CONTROLS - Adjust these values to get perfect sizing */}
-            <h1 className="text-[clamp(8rem,20vw,30rem)] md:text-[clamp(12rem,22vw,35rem)] lg:text-[clamp(16rem,21vw,38rem)] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter ">
+            <h1 className="text-[clamp(5rem,18vw,30rem)] md:text-[clamp(12rem,22vw,35rem)] lg:text-[clamp(16rem,21vw,38rem)] font-black text-white uppercase pixel-text leading-none select-none tracking-normal ">
                AKUMA
             </h1>
          </motion.div>
