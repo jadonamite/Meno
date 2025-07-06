@@ -1,0 +1,216 @@
+"use client";
+import { useState, useMemo } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
+import CollectionTableRow from "./CollectionTableRow";
+import Pagination from "./Pagination";
+import {
+   collectionRankingData,
+   filterCategories,
+   timeFilters,
+} from "../data/CollectionRankingData";
+
+export default function CollectionTable({ showFiat = false }) {
+   const [currentPage, setCurrentPage] = useState(1);
+   const [activeFilter, setActiveFilter] = useState("all");
+   const [activeTimeFilter, setActiveTimeFilter] = useState("1d");
+   const [sortField, setSortField] = useState("rank");
+   const [sortDirection, setSortDirection] = useState("asc");
+   const [favorites, setFavorites] = useState(new Set());
+
+   const itemsPerPage = 10;
+
+   // Filter and sort data
+   const filteredAndSortedData = useMemo(() => {
+      let filtered = collectionRankingData;
+
+      // Apply category filter
+      if (activeFilter !== "all") {
+         filtered = filtered.filter((item) => item.category === activeFilter);
+      }
+
+      // Apply sorting
+      const sorted = [...filtered].sort((a, b) => {
+         let aValue = a[sortField];
+         let bValue = b[sortField];
+
+         if (typeof aValue === "string") {
+            aValue = aValue.toLowerCase();
+            bValue = bValue.toLowerCase();
+         }
+
+         if (sortDirection === "asc") {
+            return aValue > bValue ? 1 : -1;
+         } else {
+            return aValue < bValue ? 1 : -1;
+         }
+      });
+
+      return sorted;
+   }, [activeFilter, sortField, sortDirection]);
+
+   // Pagination
+   const totalPages = Math.ceil(filteredAndSortedData.length / itemsPerPage);
+   const startIndex = (currentPage - 1) * itemsPerPage;
+   const paginatedData = filteredAndSortedData.slice(
+      startIndex,
+      startIndex + itemsPerPage
+   );
+
+   const handleSort = (field) => {
+      if (sortField === field) {
+         setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      } else {
+         setSortField(field);
+         setSortDirection("asc");
+      }
+   };
+
+   const handleFavorite = (collectionId, isFavorited) => {
+      const newFavorites = new Set(favorites);
+      if (isFavorited) {
+         newFavorites.add(collectionId);
+      } else {
+         newFavorites.delete(collectionId);
+      }
+      setFavorites(newFavorites);
+   };
+
+   const SortIcon = ({ field }) => {
+      if (sortField !== field) return null;
+      return sortDirection === "asc" ? (
+         <ChevronUp size={16} className="text-menoGreen" />
+      ) : (
+         <ChevronDown size={16} className="text-menoGreen" />
+      );
+   };
+
+   return (
+      <div className="bg-gray-900 rounded-xl overflow-hidden">
+         {/* Header with filters */}
+         <div className="p-6 border-b border-gray-800">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+               {/* Category filters */}
+               <div className="flex space-x-6">
+                  {filterCategories.map((filter) => (
+                     <button
+                        key={filter.id}
+                        onClick={() => {
+                           setActiveFilter(filter.id);
+                           setCurrentPage(1);
+                        }}
+                        className={`filter-button ${
+                           activeFilter === filter.id
+                              ? "filter-button-active"
+                              : "filter-button-inactive"
+                        }`}>
+                        {filter.label}
+                     </button>
+                  ))}
+               </div>
+
+               {/* Time filters */}
+               <div className="flex space-x-2">
+                  {timeFilters.map((filter) => (
+                     <button
+                        key={filter.id}
+                        onClick={() => setActiveTimeFilter(filter.id)}
+                        className={`time-filter-button ${
+                           activeTimeFilter === filter.id
+                              ? "time-filter-active"
+                              : "time-filter-inactive"
+                        }`}>
+                        {filter.label}
+                     </button>
+                  ))}
+               </div>
+            </div>
+         </div>
+
+         {/* Table */}
+         <div className="overflow-x-auto">
+            <table className="w-full">
+               <thead className="bg-gray-800/50">
+                  <tr>
+                     <th className="text-left px-4 py-3 text-gray-400 font-medium text-sm">
+                        #
+                     </th>
+                     <th className="text-left px-4 py-3 text-gray-400 font-medium text-sm">
+                        Collection
+                     </th>
+                     <th className="text-right px-4 py-3">
+                        <button
+                           onClick={() => handleSort("floor")}
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           <span>Floor</span>
+                           <SortIcon field="floor" />
+                        </button>
+                     </th>
+                     <th className="text-right px-4 py-3">
+                        <button
+                           onClick={() => handleSort("topOffer")}
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           <span>Top Offer</span>
+                           <SortIcon field="topOffer" />
+                        </button>
+                     </th>
+                     <th className="text-right px-4 py-3">
+                        <button
+                           onClick={() => handleSort("floorId")}
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           <span>Floor Id</span>
+                           <SortIcon field="floorId" />
+                        </button>
+                     </th>
+                     <th className="text-right px-4 py-3">
+                        <button
+                           onClick={() => handleSort("volume")}
+                           className="flex items-center space-x-1 text-gray-400 hover:text-white transition-colors font-medium text-sm ml-auto">
+                           <span>Volume</span>
+                           <SortIcon field="volume" />
+                        </button>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {paginatedData.map((collection) => (
+                     <CollectionTableRow
+                        key={collection.id}
+                        collection={collection}
+                        showFiat={showFiat}
+                        onFavorite={handleFavorite}
+                     />
+                  ))}
+               </tbody>
+            </table>
+         </div>
+
+         {/* Pagination */}
+         {totalPages > 1 && (
+            <div className="p-6 border-t border-gray-800">
+               <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+               />
+            </div>
+         )}
+
+         {/* Results info */}
+         <div className="px-6 py-4 border-t border-gray-800 bg-gray-800/25">
+            <div className="flex items-center justify-between text-sm text-gray-400">
+               <span>
+                  Showing {startIndex + 1}-
+                  {Math.min(
+                     startIndex + itemsPerPage,
+                     filteredAndSortedData.length
+                  )}{" "}
+                  of {filteredAndSortedData.length} collections
+               </span>
+               <span>
+                  Page {currentPage} of {totalPages}
+               </span>
+            </div>
+         </div>
+      </div>
+   );
+}
