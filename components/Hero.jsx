@@ -54,7 +54,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
    return (
       <section
          ref={containerRef}
-         className="relative min-h-screen overflow-hidden bg-[#0e0e0e] text-white px-4 md:px-8 lg:px-12">
+         className="relative min-h-[45vh] md:min-h-[70vh] overflow-hidden bg-[#0e0e0e] text-white px-4 md:px-8 lg:px-12">
          {/* Background "AKUMA" Text */}
          <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -65,7 +65,7 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
             {/* 🎯 AKUMA TEXT SIZE CONTROLS - Adjust these values to get perfect sizing */}
-            <h1 className="text-[clamp(6rem,18vw,30rem)] md:text-[clamp(12rem,22vw,35rem)] lg:text-[clamp(18rem,25vw,40rem)] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter opacity-80">
+            <h1 className="text-[clamp(8rem,20vw,30rem)] md:text-[clamp(12rem,22vw,35rem)] lg:text-[clamp(16rem,21vw,38rem)] font-black text-white uppercase pixel-text leading-none select-none tracking-tighter ">
                AKUMA
             </h1>
          </motion.div>
@@ -88,10 +88,13 @@ export default function Hero({ enableParallax = true, enableEntrance = true }) {
             />
          </motion.div>
 
-         {/* Bottom Section - Absolutely positioned */}
+         {/* Bottom Section - Absolutely positioned with better control */}
          <motion.div
-            className="absolute bottom-0 left-0 right-0 flex justify-between items-end p-4 md:p-8 lg:p-12"
-            style={enableParallax ? { y: foregroundY } : {}}
+            className="absolute left-0 right-0 flex justify-between items-end p-4 md:p-8 lg:p-12"
+            style={{
+               bottom: "clamp(1rem, 2vh, 2rem)", // 🎯 BOTTOM POSITION CONTROL - Adjust this to move button up/down
+               ...(enableParallax ? { y: foregroundY } : {}),
+            }}
             variants={enableEntrance ? entranceVariants : {}}
             initial={enableEntrance ? "hidden" : "visible"}
             animate="visible">
