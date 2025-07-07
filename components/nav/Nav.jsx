@@ -12,7 +12,8 @@ export default function Nav({ onLoginClick }) {
          <Logo />
 
          {/* Search */}
-         <div className="hidden md:flex flex-2 justify-center max-w-lg">
+
+         <div className="hidden md:flex flex-grow justify-center  md:w-[40vw]b xl_custom:w-[63vw] ">
             <SearchBar />
          </div>
 

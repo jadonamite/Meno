@@ -40,6 +40,10 @@ module.exports = {
                "100%": { transform: "translateY(0)", opacity: "1" },
             },
          },
+         screens: {
+            // Add your custom breakpoint
+            xl_custom: "1000px", // You can name it whatever you like, e.g., 'lg_desktop'
+         },
       },
    },
    plugins: [],
