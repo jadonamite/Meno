@@ -1,28 +1,9 @@
 "use client";
 
 import { useWeb3Auth } from "../../lib/Web3AuthContext";
-import { useEffect, useState } from "react";
 
 export default function NavActions({ onLoginClick }) {
-   const { loggedIn, userInfo, getAccounts } = useWeb3Auth();
-   const [userAddress, setUserAddress] = useState("");
-
-   useEffect(() => {
-      if (loggedIn && !userAddress) {
-         fetchUserAddress();
-      }
-   }, [loggedIn, userAddress]);
-
-   const fetchUserAddress = async () => {
-      try {
-         const accounts = await getAccounts();
-         if (accounts && accounts.length > 0) {
-            setUserAddress(accounts[0]);
-         }
-      } catch (error) {
-         console.error("Error fetching address:", error);
-      }
-   };
+   const { loggedIn, accounts } = useWeb3Auth();
 
    const formatAddress = (address) => {
       if (!address) return "";
@@ -33,7 +14,7 @@ export default function NavActions({ onLoginClick }) {
 
    return (
       <button onClick={onLoginClick} className="gradient-button">
-         {loggedIn ? formatAddress(userAddress) || "Connected" : "Login"}
+         {loggedIn ? formatAddress(accounts[0]) || "Connected" : "Login"}
       </button>
    );
 }

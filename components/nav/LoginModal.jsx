@@ -2,43 +2,14 @@
 
 import Modal from "../Modal";
 import { useWeb3Auth } from "../../lib/Web3AuthContext";
-import { useEffect, useState } from "react";
 
 export default function LoginModal({ isOpen, onClose }) {
-   const {
-      loggedIn,
-      loading,
-      userInfo,
-      login,
-      logout,
-      getAccounts,
-      getBalance,
-   } = useWeb3Auth();
-   const [accounts, setAccounts] = useState([]);
-   const [balance, setBalance] = useState("0");
-
-   useEffect(() => {
-      // Avoid fetching repeatedly if already have data
-      if (loggedIn && accounts.length === 0) {
-         fetchAccountData();
-      }
-   }, [loggedIn]);
-
-   const fetchAccountData = async () => {
-      try {
-         const userAccounts = await getAccounts();
-         const userBalance = await getBalance();
-         setAccounts(userAccounts);
-         setBalance(userBalance);
-      } catch (error) {
-         console.error("Error fetching account data:", error);
-      }
-   };
+   const { loggedIn, loading, userInfo, accounts, balance, login, logout } =
+      useWeb3Auth();
 
    const handleLogin = async () => {
       try {
          await login();
-         await fetchAccountData(); // Fetch once after login
          onClose();
       } catch (error) {
          console.error("Login failed:", error);
@@ -48,8 +19,6 @@ export default function LoginModal({ isOpen, onClose }) {
    const handleLogout = async () => {
       try {
          await logout();
-         setAccounts([]);
-         setBalance("0");
       } catch (error) {
          console.error("Logout failed:", error);
       }
@@ -132,7 +101,7 @@ export default function LoginModal({ isOpen, onClose }) {
                   Connect with Web3Auth
                </button>
 
-               {/* Keep the original wallet buttons as placeholder */}
+               {/* Placeholder for future wallets */}
                {["MetaMask", "WalletConnect", "Coinbase Wallet"].map(
                   (wallet) => (
                      <button
