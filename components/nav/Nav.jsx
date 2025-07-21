@@ -1,34 +1,29 @@
 "use client";
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
+import LoginButton from "./LoginButton";
+import UserProfile from "./UserProfile";
 import { useWeb3Auth } from "../../lib/Web3AuthContext";
 
-export default function Nav() {
+export default function Navbar() {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-   const { loggedIn, login, accounts } = useWeb3Auth();
-
-   const formatAddress = (address) => {
-      if (!address) return "";
-      return `${address.slice(0, 6)}...${address.slice(-4)}`;
-   };
+   const { loggedIn } = useWeb3Auth();
 
    return (
       <nav className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">
          <Logo />
-
-         <div className="hidden md:flex flex-grow justify-center">
+         <div className="hidden md:flex  justify-center  md:w-[40vw]b xl_custom:w-[63vw] ">
             <SearchBar />
          </div>
 
          <div className="flex items-center gap-4">
-            <button
-               onClick={login}
-               className="hidden md:inline-block gradient-button text-black font-semibold px-9 py-3 rounded-md transition transform hover:scale-105">
-               {loggedIn ? formatAddress(accounts[0]) || "Connected" : "Login"}
-            </button>
+            {loggedIn ? (
+               <UserProfile className="hidden md:block" />
+            ) : (
+               <LoginButton className="hidden md:inline-block" />
+            )}
 
             <button
                className="md:hidden"
