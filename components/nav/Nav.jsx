@@ -4,24 +4,31 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import NavActions from "./NavActions";
-import LoginModal from "./LoginModal";
-import { useModal } from "../../hooks/useModal";
+import { useWeb3Auth } from "../../lib/Web3AuthContext";
 
 export default function Nav() {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-   const { isOpen, openModal, closeModal } = useModal();
+   const { loggedIn, login, accounts } = useWeb3Auth();
+
+   const formatAddress = (address) => {
+      if (!address) return "";
+      return `${address.slice(0, 6)}...${address.slice(-4)}`;
+   };
 
    return (
       <nav className="flex items-center justify-between w-full px-4 md:px-10 py-4 bg-neutral-950 border-b border-gray-800 z-50 relative">
          <Logo />
 
-         <div className="hidden md:flex flex-grow justify-center md:w-[40vw] xl_custom:w-[60vw]">
+         <div className="hidden md:flex flex-grow justify-center">
             <SearchBar />
          </div>
 
          <div className="flex items-center gap-4">
-            <NavActions onLoginClick={openModal} />
+            <button
+               onClick={login}
+               className="hidden md:inline-block gradient-button text-black font-semibold px-9 py-3 rounded-md transition transform hover:scale-105">
+               {loggedIn ? formatAddress(accounts[0]) || "Connected" : "Login"}
+            </button>
 
             <button
                className="md:hidden"
@@ -34,8 +41,6 @@ export default function Nav() {
                )}
             </button>
          </div>
-
-         <LoginModal isOpen={isOpen} onClose={closeModal} />
       </nav>
    );
 }
