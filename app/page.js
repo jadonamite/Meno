@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import NFTGrid from "../components/NFTGrid";
 import ActionSection from "../components/ActionSection";
 import CollectionTable from "../components/CollectionTable";
+import Footer from "../components/Footer";
 
 export default function Home() {
    return (
@@ -12,6 +13,7 @@ export default function Home() {
          <CollectionTable />
          <NFTGrid />
          <ActionSection />
+         <Footer />
       </div>
    );
 }
