@@ -1,19 +1,26 @@
-import Nav from "../components/nav/Nav";
+'use client';
+import { useWeb3Auth } from "../lib/Web3AuthContext";
 import Hero from "../components/Hero";
-import NFTGrid from "../components/NFTGrid";
-import ActionSection from "../components/ActionSection";
 import CollectionTable from "../components/CollectionTable";
-import Footer from "../components/Footer";
+import GuestLayout from "../components/layout/GuestLayout";
+import ConnectedLayout from "../components/layout/ConnectedLayout";
+import DashboardOverview from "../components/DashboardOverview";
 
 export default function Home() {
-   return (
-      <div className="min-h-screen bg-neutral">
-         <Nav />
-         <Hero />
-         <CollectionTable />
-         <NFTGrid />
-         <ActionSection />
-         <Footer />
-      </div>
-   );
+  const { loggedIn } = useWeb3Auth();
+
+  if (loggedIn) {
+    return (
+      <ConnectedLayout>
+        <DashboardOverview />
+      </ConnectedLayout>
+    );
+  }
+
+  return (
+    <GuestLayout>
+      <Hero />
+      <CollectionTable />
+    </GuestLayout>
+  );
 }
