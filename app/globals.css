@@ -143,6 +143,89 @@ a:focus {
       @apply bg-gradient-to-r from-[#00e676] to-[#00ffb3] bg-clip-text text-transparent;
    }
 }
+/* ===== Add this to your app/globals.css ===== */
+
+/* User Profile Modal Styles */
+.user-profile-modal {
+  width: 100%;
+  max-width: 384px; /* 24rem - equivalent to max-w-sm */
+  height: 90vh;
+  margin-right: 30px;
+  background: rgba(17, 24, 39, 0.95); /* gray-900/95 */
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(55, 65, 81, 0.5); /* border-gray-700/50 */
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.user-profile-modal-open {
+  transform: translateX(0);
+  opacity: 1;
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+/* Desktop and larger tablets - maintain consistent width */
+@media (min-width: 768px) {
+  .user-profile-modal {
+    width: 400px; /* Fixed width instead of responsive vw */
+    max-width: 400px;
+  }
+}
+
+/* Large screens - maintain the same width */
+@media (min-width: 1024px) {
+  .user-profile-modal {
+    width: 420px; /* Slightly larger for large screens */
+    max-width: 420px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1280px) {
+  .user-profile-modal {
+    width: 450px; /* Even larger for XL screens */
+    max-width: 450px;
+  }
+}
+
+/* Animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Mobile - full width with proper spacing */
+@media (max-width: 767px) {
+  .user-profile-modal {
+    width: calc(100% - 40px); /* Full width minus margins */
+    max-width: calc(100% - 40px);
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+}
 
 /*  Complete Color Reference Guide */
 /*

@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-neutral">
-      <Nav />
+      <Navbar />
       <Hero />
       <CollectionTable />
       <NFTGrid />
