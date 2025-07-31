@@ -1,6 +1,6 @@
 'use client';
 import { useWeb3Auth } from "../lib/Web3AuthContext";
-import Nav from "../components/nav/Nav";
+import Navbar from "../components/nav/Nav";
 import ConnectedNavbar from "../components/nav/ConnectedNavbar";
 import Hero from "../components/Hero";
 import NFTGrid from "../components/NFTGrid";
