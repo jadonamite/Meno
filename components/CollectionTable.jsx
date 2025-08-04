@@ -60,7 +60,14 @@ export default function CollectionTable() {
       startIndex + itemsPerPage
    );
 
- 
+   const handleSort = (field) => {
+      if (sortField === field) {
+         setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      } else {
+         setSortField(field);
+         setSortDirection("asc");
+      }
+   };
 
    const handleFavorite = (collectionId, isFavorited) => {
       const newFavorites = new Set(favorites);
