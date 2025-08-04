@@ -25,16 +25,6 @@ export default function Navbar() {
                <LoginButton className="hidden md:inline-block" />
             )}
 
-            <button
-               className="md:hidden"
-               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-               aria-label="Toggle menu">
-               {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-               ) : (
-                  <Menu className="w-6 h-6" />
-               )}
-            </button>
          </div>
       </nav>
    );
